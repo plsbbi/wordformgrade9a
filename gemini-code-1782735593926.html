@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuyên Đề Cấu Trúc Từ Loại Word Form (Học Phần 1) - Ms Lê Hằng English</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #8854C0;
+            --accent-color: #FDCB6E;
+            --teal-color: #00C9A7;
+            --correct-color: #00D26A;
+            --wrong-color: #FF4757;
+            --text-color: #2D3436;
+            --card-bg: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+            margin: 0; padding: 0;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #8854C0, #FDCB6E, #00C9A7, #FF7675);
+            background-size: 400% 400%;
+            animation: gradientAnim 12s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; opacity: 0.12; pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill='%23ffffff'%3E%3Cpath d='M20 20 L30 20 L30 30 L20 30 Z M70 20 A 8 8 0 1 1 70 36 A 8 8 0 1 1 70 20 M50 70 L55 80 L65 80 L57 86 L60 96 L50 90 L40 96 L43 86 L35 80 L45 80 Z' /%3E%3C/g%3E%3C/svg%3E");
+            animation: patternFloat 25s linear infinite;
+        }
+
+        @keyframes gradientAnim {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes patternFloat {
+            0% { background-position: 0 0; }
+            100% { background-position: 500px 1000px; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 780px;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        header h5 {
+            font-size: 1.05rem;
+            color: #FFFFFF;
+            background: rgba(0, 0, 0, 0.15);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            font-weight: 700;
+        }
+
+        .warning-box {
+            background: #FFEAA7;
+            border: 4px solid #FDCB6E;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 0 #E17055;
+            color: #2D3436;
+            text-align: center;
+        }
+
+        .warning-box h4 {
+            font-size: 1.25rem;
+            color: #D63031;
+            margin-bottom: 8px;
+            font-weight: 900;
+        }
+
+        .warning-box p {
+            font-size: 0.98rem;
+            line-height: 1.5;
+            font-weight: 700;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 22px;
+            padding: 24px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 0 rgba(0,0,0,0.1);
+            border: 3px solid #E0E0E0;
+        }
+
+        .card-meta-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #A0A0A0;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 18px;
+            background: #F8F9FA;
+            padding: 14px;
+            border-radius: 12px;
+            border-left: 5px solid #6C5CE7;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: #FFFFFF;
+            border: 3px solid #E0E0E0;
+            border-radius: 18px;
+            padding: 14px 20px;
+            font-size: 1.02rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-align: left;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #E0E0E0;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            width: 100%;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            transform: scale(1.01) translateY(-2px);
+            box-shadow: 0 8px 0 #D0D0D0;
+            background: #FAEDFF;
+        }
+
+        .option-btn.correct {
+            background: var(--correct-color) !important;
+            border-color: #00B359 !important;
+            color: white !important;
+            box-shadow: 0 6px 0 #008040 !important;
+        }
+
+        .option-btn.wrong {
+            background: var(--wrong-color) !important;
+            border-color: #E03847 !important;
+            color: white !important;
+            box-shadow: 0 6px 0 #B32431 !important;
+        }
+
+        .option-btn.disabled {
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        @keyframes shakeAction {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        .shake-animation { animation: shakeAction 0.4s ease-in-out; }
+
+        .explanation-box {
+            margin-top: 20px;
+            background: #F3EAFE;
+            border-left: 6px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 15px 18px;
+            display: none;
+            animation: slideDown 0.4s ease forwards;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .explanation-title {
+            color: var(--primary-color);
+            font-weight: 900;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+        }
+
+        .explanation-content {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+
+        .submit-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .submit-all-btn {
+            background: #6C5CE7; color: white; border: none;
+            padding: 16px 45px; font-size: 1.3rem; font-weight: 900;
+            border-radius: 22px; cursor: pointer; box-shadow: 0 6px 0 #4834D4;
+        }
+
+        #confetti-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 999;
+        }
+
+        .modal-mask {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); display: flex;
+            justify-content: center; align-items: center; z-index: 1000;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .modal-mask.active { opacity: 1; pointer-events: auto; }
+        .modal-container {
+            background: white; border-radius: 25px; padding: 35px;
+            max-width: 520px; width: 90%; text-align: center;
+            border: 4px solid var(--accent-color);
+        }
+        .modal-score { font-size: 3rem; font-weight: 900; color: var(--primary-color); margin: 15px 0; }
+        .modal-feedback { font-size: 1.05rem; color: var(--text-color); font-weight: 700; line-height: 1.6; margin-bottom: 25px; }
+        .modal-btn {
+            background: var(--teal-color); color: white; border: none; padding: 12px 30px;
+            font-size: 1.05rem; font-weight: 700; border-radius: 14px; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="container">
+        <header>
+            <h5>Giáo viên tạo: Ms Lê Hằng English</h5>
+        </header>
+
+        <div class="warning-box">
+            <h4>⚠️ ĐÃ SỬA LỖI HIỂN THỊ FONT & CẬP NHẬT GIẢI THÍCH CHI TIẾT ⚠️</h4>
+            <p>Toàn bộ các mã mũi tên lỗi đã được khắc phục thành biểu tượng Unicode sắc nét. Các bài học đã được phân tích sâu sắc hơn giúp con nắm chắc bản chất ngữ pháp!</p>
+        </div>
+
+        <div id="quiz-injector-node"></div>
+
+        <div class="submit-section">
+            <button class="submit-all-btn" onclick="processQuizEvaluation()">NỘP BÀI CHẤM ĐIỂM 🎉</button>
+        </div>
+    </div>
+
+    <div class="modal-mask" id="score-modal">
+        <div class="modal-container">
+            <h2>🏆 KẾT QUẢ BÀI KIỂM TRA 🏆</h2>
+            <div class="modal-score" id="score-text">0 / 50</div>
+            <div class="modal-feedback" id="feedback-text">Lời khuyên từ cô giáo...</div>
+            <button class="modal-btn" onclick="reloadQuizLayout()">Làm Lại Từ Đầu 🔄</button>
+        </div>
+    </div>
+
+    <script>
+        const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+        let audioContextInstance = null;
+
+        function triggerSoundFeedback(status) {
+            try {
+                if (!audioContextInstance) audioContextInstance = new AudioCtxClass();
+                const osc = audioContextInstance.createOscillator();
+                const gain = audioContextInstance.createGain();
+                osc.connect(gain); gain.connect(audioContextInstance.destination);
+
+                if (status === 'correct') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, audioContextInstance.currentTime);
+                    osc.frequency.setValueAtTime(783.99, audioContextInstance.currentTime + 0.1);
+                    gain.gain.setValueAtTime(0.15, audioContextInstance.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioContextInstance.currentTime + 0.3);
+                    osc.start(); osc.stop(audioContextInstance.currentTime + 0.3);
+                } else {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(196, audioContextInstance.currentTime);
+                    osc.frequency.setValueAtTime(130, audioContextInstance.currentTime + 0.15);
+                    gain.gain.setValueAtTime(0.2, audioContextInstance.currentTime);
+                    osc.start(); osc.stop(audioContextInstance.currentTime + 0.35);
+                }
+            } catch (e) {}
+        }
+
+        // KHO DỮ LIỆU ĐÃ SỬA LỖI PHÔNG CHỮ VÀ NÂNG CẤP GIẢI THÍCH CHI TIẾT
+        const dataset = [
+            { id: 1, text: "1. Do parents get (SATISFY) from their children’s studies?", options: ["satisfaction", "satisfying", "satisfied", "satisfy"], correct: "satisfaction", exp: "<strong>Vị trí từ loại:</strong> Ô trống đứng sau ngoại động từ <em>get</em> và đứng trước giới từ <em>from</em>, đóng vai trò làm tân ngữ trực tiếp cho câu $\rightarrow$ Cần điền một <strong>Danh từ</strong>.<br><strong>Ngữ cảnh & Cụm từ cố định:</strong> Ta có cụm từ cố định <em>get satisfaction from something</em> nghĩa là 'tìm thấy sự hài lòng, thỏa mãn từ việc gì'. Câu này dịch là: 'Cha mẹ có nhận được sự hài lòng từ việc học của con cái không?'<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>satisfy</strong> (làm cho ai thỏa mãn)<br>• Danh từ: <strong>satisfaction</strong> (sự hài lòng, sự thỏa mãn)<br>• Tính từ: <strong>satisfied</strong> (cảm thấy hài lòng - dùng cho người), <strong>satisfying / satisfactory</strong> (đem lại sự hài lòng - dùng cho tính chất của sự vật, sự việc)" },
+            { id: 2, text: "2. She sang the song (BEAUTY) .", options: ["beautifully", "beautiful", "beauty", "beautify"], correct: "beautifully", exp: "<strong>Vị trí từ loại:</strong> Ô trống nằm ở cuối câu, đứng sau một cấu trúc đã đầy đủ thành phần (Chủ ngữ 'She' + Động từ thường 'sang' + Tân ngữ 'the song') $\rightarrow$ Cần điền một <strong>Trạng từ cách thức</strong> để bổ nghĩa cho hành động hát (sang).<br><strong>Mẹo làm bài:</strong> Động từ thường đi với trạng từ (V + Adv). Câu này dịch là: 'Cô ấy đã hát bài hát đó một cách rất hay/tuyệt vời.'<br><br><strong>💎 Word Family:</strong><br>• Danh từ: <strong>beauty</strong> (vẻ đẹp, nhan sắc)<br>• Động từ: <strong>beautify</strong> (làm đẹp, tô điểm)<br>• Tính từ: <strong>beautiful</strong> (xinh đẹp, hay)<br>• Trạng từ: <strong>beautifully</strong> (một cách xinh đẹp, một cách hay ho)" },
+            { id: 3, text: "3. Could you please (INFORMATION) us about the courses and fees?", options: ["inform", "information", "informative", "informed"], correct: "inform", exp: "<strong>Vị trí từ loại:</strong> Đứng sau cấu trúc cầu khiến, đề nghị lịch sự <em>Could you please...</em> $\rightarrow$ Vị trí này bắt buộc phải điền một <strong>Động từ nguyên mẫu không 'to' (Bare-infinitive)</strong>.<br><strong>Ngữ cảnh & Cấu trúc:</strong> Ta có cấu trúc <em>inform someone about something</em> có nghĩa là 'thông báo/cho ai đó biết về thông tin gì'. Câu này dịch là: 'Bạn có thể vui lòng thông báo cho chúng tôi về các khóa học và học phí được không?'<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>inform</strong> (thông báo, báo tin)<br>• Danh từ: <strong>information</strong> (thông tin, dữ liệu - danh từ không đếm được)<br>• Tính từ: <strong>informative</strong> (chứa nhiều thông tin bổ ích), <strong>informed</strong> (có hiểu biết, am hiểu)" },
+            { id: 4, text: "4. She found her job (BORE) .", options: ["boring", "bored", "boredom", "bore"], correct: "boring", exp: "<strong>Vị trí từ loại:</strong> Áp dụng cấu trúc nhận định, đánh giá tính chất: <strong>find + something + Adjective</strong> (thấy cái gì đó như thế nào). Do đó, vị trí này cần điền một <strong>Tính từ</strong>.<br><strong>Ngẹo chọn đuôi -ing/-ed:</strong> Tân ngữ đứng trước là vật (her job - công việc của cô ấy). Để mô tả tính chất cốt lõi tự thân của một sự vật/công việc gây ra cảm giác nhàm chán, ta phải dùng tính từ đuôi <strong>'-ing'</strong>.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>bore</strong> (làm cho ai buồn chán)<br>• Danh từ: <strong>boredom</strong> (sự buồn chán, trạng thái chán nản)<br>• Tính từ: <strong>bored</strong> (cảm thấy chán - chỉ cảm xúc con người), <strong>boring</strong> (tính chất chán - chỉ đặc điểm sự vật/vật)" },
+            { id: 5, text: "5. That Vietnamese singer is (NATION) famous. People all over the world know her.", options: ["internationally", "national", "international", "nationally"], correct: "internationally", exp: "<strong>Vị trí từ loại:</strong> Ô trống đứng trước và bổ nghĩa trực tiếp cho tính từ <em>famous</em> (nổi tiếng) $\rightarrow$ Theo quy tắc, từ loại bổ nghĩa cho tính từ phải là một <strong>Trạng từ</strong> (Adv + Adj).<br><strong>Ngữ cảnh chọn từ:</strong> Câu phía sau giải thích 'People all over the world know her' (Mọi người trên khắp thế giới đều biết cô ấy) $\rightarrow$ Ca sĩ này nổi tiếng ở quy mô toàn cầu/quốc tế chứ không chỉ trong nước. Vì vậy, ta phải thêm tiền tố 'inter-' để tạo thành trạng từ <em>internationally</em> (nổi tiếng quốc tế).<br><br><strong>💎 Word Family:</strong><br>• Danh từ: <strong>nation</strong> (quốc gia), <strong>nationality</strong> (quốc tịch)<br>• Tính từ: <strong>national</strong> (thuộc quốc gia) ↔ <strong>international</strong> (thuộc quốc tế)<br>• Trạng từ: <strong>nationally</strong> (toàn quốc) ↔ <strong>internationally</strong> (trên toàn thế giới/quốc tế)" },
+            { id: 6, text: "6. Mount Pinatubo in the Philippines was the world’s largest (VOLCANO) eruption in more than 50 years.", options: ["volcanic", "volcano", "volcanoes", "volcanism"], correct: "volcanic", exp: "<strong>Vị trí từ loại:</strong> Đứng trước danh từ sự phun trào <em>eruption</em> nhằm bổ nghĩa phân loại cho danh từ đó $\rightarrow$ Cần điền một <strong>Tính từ</strong>.<br><strong>Ngữ cảnh:</strong> Cụm danh từ ghép chuyên ngành địa lý <em>volcanic eruption</em> nghĩa là 'sự phun trào núi lửa'. Câu này dịch là: 'Núi Pinatubo ở Philippines là vụ phun trào núi lửa lớn nhất thế giới trong hơn 50 năm qua.'<br><br><strong>💎 Word Family:</strong><br>• Danh từ: <strong>volcano</strong> (ngọn núi lửa) -> số nhiều: <strong>volcanoes</strong><br>• Tính từ: <strong>volcanic</strong> (thuộc về núi lửa, do núi lửa tạo ra)" },
+            { id: 7, text: "7. I think the government should fine (HEAVY) anyone damaging green trees.", options: ["heavily", "heavy", "heaviness", "heavier"], correct: "heavily", exp: "<strong>Vị trí từ loại:</strong> Ô trống đứng sau và bổ nghĩa cách thức, mức độ cho động từ hành động xử phạt <em>fine</em> $\rightarrow$ Cần điền một <strong>Trạng từ</strong>.<br><strong>Ngữ cảnh:</strong> Ta có cụm hành động thường gặp <em>fine heavily</em> nghĩa là 'phạt tiền rất nặng'. Câu này dịch là: 'Tôi nghĩ chính phủ nên phạt nặng bất cứ ai làm tổn hại đến cây xanh.'<br><br><strong>💎 Word Family:</strong><br>• Tính từ: <strong>heavy</strong> (nặng nề, dày đặc)<br>• Danh từ: <strong>heaviness</strong> (sự nặng nề, sức nặng)<br>• Trạng từ: <strong>heavily</strong> (một cách nặng nề, phạt nặng)" },
+            { id: 8, text: "8. The company will invest 2 million dollars to (MODERN) its factories.", options: ["modernize", "modern", "modernization", "modernity"], correct: "modernize", exp: "<strong>Vị trí từ loại:</strong> Đứng sau từ chỉ mục đích <em>to</em> (để làm gì) $\rightarrow$ Vị trí này bắt buộc phải điền một <strong>Động từ nguyên mẫu (Infinitive Verb)</strong>.<br><strong>Ngữ cảnh:</strong> Gốc từ 'modern' (hiện đại) chuyển sang dạng động từ mang nghĩa tác động là 'hiện đại hóa' (modernize). Câu này dịch là: 'Công ty sẽ đầu tư 2 triệu đô la để hiện đại hóa các nhà máy của mình.'<br><br><strong>💎 Word Family:</strong><br>• Tính từ: <strong>modern</strong> (tân tiến, hiện đại)<br>• Động từ: <strong>modernize / modernise</strong> (hiện đại hóa)<br>• Danh từ: <strong>modernization</strong> (sự hiện đại hóa), <strong>modernity</strong> (tính chất hiện đại)" },
+            { id: 9, text: "9. The world changed rapidly after the (INVENT) of the phone.", options: ["invention", "inventor", "invent", "inventive"], correct: "invention", exp: "<strong>Vị trí từ loại:</strong> Từ loại bị kẹp giữa mạo từ xác định <em>the</em> và giới từ chỉ sở hữu <em>of</em> $\rightarrow$ Vị trí này chắc chắn phải điền một <strong>Danh từ</strong>.<br><strong>Ngữ cảnh chọn từ:</strong> Ta cần danh từ chỉ một sự vật/thành tựu được tạo ra chứ không chọn danh từ chỉ người (inventor - nhà phát minh). Do đó từ chính xác là <em>invention</em> (sự phát minh). Câu dịch: 'Thế giới đã thay đổi nhanh chóng sau sự phát minh ra điện thoại.'<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>invent</strong> (phát minh, sáng chế)<br>• Danh từ: <strong>invention</strong> (sự phát minh, vật phát minh), <strong>inventor</strong> (nhà sáng chế/phát minh)<br>• Tính từ: <strong>inventive</strong> (giàu trí tưởng tượng, đầy sáng tạo)" },
+            { id: 10, text: "10. I hate sleeping in this bed. It’s very (COMFORT) .", options: ["uncomfortable", "comfortable", "comfort", "comfortably"], correct: "uncomfortable", exp: "<strong>Vị trí từ loại:</strong> Đứng sau cấu trúc hệ từ và trạng từ chỉ mức độ <em>It’s very...</em> $\rightarrow$ Cần điền một <strong>Tính từ</strong> đóng vai trò làm bổ ngữ cho chủ ngữ.<br><strong>Phân tích ngữ cảnh trái nghĩa:</strong> Câu đầu tiên người nói khẳng định 'I hate sleeping in this bed' (Tôi ghét ngủ trên chiếc giường này) $\rightarrow$ Chiếc giường phải đem lại cảm giác tệ, không thoải mái. Vì vậy ta phải thêm tiền tố phủ định 'un-' để biến đổi tính từ thành <em>uncomfortable</em> (khó chịu, không thoải mái).<br><br><strong>💎 Word Family:</strong><br>• Danh từ/Động từ: <strong>comfort</strong> (sự an ủi, sự tiện nghi / an ủi)<br>• Tính từ: <strong>comfortable</strong> (thoải mái, dễ chịu) ↔ <strong>uncomfortable</strong> (khó chịu, không thoải mái)<br>• Trạng từ: <strong>comfortably</strong> (một cách dễ chịu) ↔ <strong>uncomfortably</strong>" },
+            { id: 11, text: "11. Mark says that sailing a boat gives him a lot of (ENJOY) .", options: ["enjoyment", "enjoy", "enjoyable", "enjoyably"], correct: "enjoyment", exp: "<strong>Vị trí từ loại:</strong> Đứng sau cụm từ chỉ định lượng số nhiều <em>a lot of</em> (nhiều...) $\rightarrow$ Vị trí này bắt buộc phải điền một <strong>Danh từ</strong> (đếm được số nhiều hoặc không đếm được).<br><strong>Ngữ cảnh:</strong> Ta cần danh từ trừu tượng chỉ cảm xúc từ gốc động từ 'enjoy'. Đó là <em>enjoyment</em> (niềm vui thích, sự tận hưởng). Câu này dịch là: 'Mark nói rằng việc chèo thuyền mang lại cho anh ấy rất nhiều niềm vui.'<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>enjoy</strong> (thích thú, thưởng thức)<br>• Danh từ: <strong>enjoyment</strong> (sự thích thú, niềm vui thú)<br>• Tính từ: <strong>enjoyable</strong> (thú vị, đem lại cảm giác dễ chịu)" },
+            { id: 12, text: "12. This room is (LOCK) . You cannot enter it.", options: ["locked", "lock", "unlock", "unlocking"], correct: "locked", exp: "<strong>Vị trí từ loại:</strong> Đứng sau hệ động từ tobe <em>is</em> $\rightarrow$ Cần điền một tính từ hoặc động từ phân từ chỉ trạng thái.<br><strong>Ngữ cảnh câu hỏi:</strong> Vế sau giải thích 'You cannot enter it' (Bạn không thể đi vào trong được) $\rightarrow$ Trạng thái của căn phòng hiện tại là đang bị khóa. Ta dùng tính từ phân từ bị động đuôi <strong>'-ed'</strong> là <em>locked</em>. Câu dịch: 'Căn phòng này bị khóa rồi. Bạn không thể vào đâu.'<br><br><strong>💎 Word Family:</strong><br>• Động từ/Danh từ: <strong>lock</strong> (khóa / ổ khóa) ↔ <strong>unlock</strong> (mở khóa)<br>• Tính từ phân từ: <strong>locked</strong> (đang bị khóa) ↔ <strong>unlocked</strong> (đang mở khóa)" },
+            { id: 13, text: "13. Steven is a (POWER) young man. He practices judo and body – building.", options: ["powerful", "power", "powerless", "powerfully"], correct: "powerful", exp: "<strong>Vị trí từ loại:</strong> Nằm trong cụm danh từ 'a... young man', đứng trước danh từ để bổ nghĩa tính chất cho người đàn ông đó $\rightarrow$ Cần một <strong>Tính từ</strong>.<br><strong>Ngữ cảnh:</strong> Vế sau bổ trợ lý do 'He practices judo and body-building' (Anh ấy tập võ judo và thể hình) $\rightarrow$ Steven phải là một người rất khỏe mạnh, dũng mãnh. Do đó ta chọn tính từ mang nghĩa tích cực là <em>powerful</em>.<br><br><strong>💎 Word Family:</strong><br>• Danh từ: <strong>power</strong> (sức mạnh, năng lượng, quyền lực)<br>• Động từ: <strong>empower</strong> (trao quyền, cấp quyền)<br>• Tính từ: <strong>powerful</strong> (mạnh mẽ, dũng mãnh) ↔ <strong>powerless</strong> (bất lực, yếu đuối)" },
+            { id: 14, text: "14. Sorry about the mistakes, I (UNDERSTAND) the instruction you gave me.", options: ["misunderstood", "understand", "understanding", "misunderstand"], correct: "misunderstood", exp: "<strong>Vị trí từ loại:</strong> Đứng ngay sau chủ ngữ <em>I</em> $\rightarrow$ Câu này đang thiếu một <strong>Động từ chính</strong> gánh vác mệnh đề.<br><strong>Phân tích ngữ cảnh trái nghĩa:</strong> Người nói mở đầu bằng lời xin lỗi 'Sorry about the mistakes' (Xin lỗi vì những sai sót) $\rightarrow$ Nguyên nhân dẫn đến sai sót là do họ đã 'hiểu sai' chứ không phải 'hiểu đúng'. Ta thêm tiền tố 'mis-' thành <em>misunderstand</em>. Đồng thời, vì lời hướng dẫn đã được cho trong quá khứ ('you gave me') nên động từ này phải chia ở thì Quá khứ đơn bất quy tắc thành <em>misunderstood</em>.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>understand</strong> (hiểu rõ) ↔ <strong>misunderstand</strong> (hiểu sai, hiểu lầm)<br>• Danh từ: <strong>understanding</strong> (sự thấu hiểu) ↔ <strong>misunderstanding</strong> (sự hiểu lầm)" },
+            { id: 15, text: "15. It is very hard for us to understand his explanation. It is (LOGIC) .", options: ["illogical", "logical", "logic", "logically"], correct: "illogical", exp: "<strong>Vị trí từ loại:</strong> Đứng sau hệ từ <em>It is...</em> ở cuối câu $\rightarrow$ Cần điền một <strong>Tính từ</strong> đóng vai trò làm bổ ngữ.<br><strong>Phân tích ngữ cảnh:</strong> Câu trước nêu rõ 'It is very hard for us to understand his explanation' (Rất khó để chúng tôi hiểu được lời giải thích của anh ấy) $\rightarrow$ Chứng tỏ lời giải thích này vô lý, phi logic. Ta chọn tính từ mang tiền tố phủ định chuyên biệt của chữ 'l' là 'il-' $\rightarrow$ <em>illogical</em> (bất hợp lý, phi logic).<br><br><strong>💎 Word Family:</strong><br>• Danh từ: <strong>logic</strong> (luận lý học, tính logic)<br>• Tính từ: <strong>logical</strong> (hợp lý, có logic) ↔ <strong>illogical</strong> (phi lý, bất hợp lý)<br>• Trạng từ: <strong>logically</strong> ↔ <strong>illogically</strong>" },
+            { id: 16, text: "16. The whole country is trying to get rid of (POOR) .", options: ["poverty", "poor", "poorly", "impoverish"], correct: "poverty", exp: "<strong>Vị trí từ loại:</strong> Đứng sau cụm động từ kèm giới từ đặc biệt <strong>get rid of</strong> (xóa bỏ, tống khứ, thoát khỏi cái gì) $\rightarrow$ Vị trí này bắt buộc phải điền một <strong>Danh từ</strong>.<br><strong>Ngữ cảnh:</strong> Đất nước đang cố gắng xóa bỏ 'nạn nghèo đói' $\rightarrow$ Ta cần danh từ trừu tượng của tính từ 'poor' là <em>poverty</em> (sự nghèo đói).<br><br><strong>💎 Word Family:</strong><br>• Tính từ: <strong>poor</strong> (nghèo nàn, chất lượng kém)<br>• Danh từ: <strong>poverty</strong> (sự nghèo đói, nạn nghèo)<br>• Động từ: <strong>impoverish</strong> (làm cho nghèo xơ xác, làm suy kiệt)" },
+            { id: 17, text: "17. English is a (COMPARE) easy language for Swedes to learn.", options: ["comparatively", "comparative", "compare", "comparison"], correct: "comparatively", exp: "<strong>Vị trí từ loại:</strong> Ô trống đứng trước và bổ nghĩa cho tính từ <em>easy</em> (dễ dàng) nằm trong cụm 'a... easy language' $\rightarrow$ Theo quy tắc vị trí từ loại, từ bổ nghĩa cho tính từ bắt buộc phải là một <strong>Trạng từ mức độ</strong> (Adv + Adj).<br><strong>Ngữ cảnh:</strong> Chọn trạng từ <em>comparatively</em> mang nghĩa là 'tương đối, có thể so sánh được'. Câu dịch: 'Tiếng Anh là một ngôn ngữ tương đối dễ học đối với người Thụy Điển.'" },
+            { id: 18, text: "18. One of the (LIMIT) of the Internet is personal information leaking.", options: ["limitations", "limits", "limitation", "limited"], correct: "limitations", exp: "<strong>Vị trí từ loại:</strong> Nằm trong cấu trúc ngữ pháp định lượng: <strong>One of the + Danh từ số nhiều</strong> (Một trong những cái gì...). Do đó từ điền vào phải là danh từ ở dạng số nhiều.<br><strong>Ngữ cảnh:</strong> Câu nói về việc rò rỉ thông tin cá nhân $\rightarrow$ Đây là một 'hạn chế/nhược điểm' của Internet. Ta chọn danh từ số nhiều là <em>limitations</em> (các mặt hạn chế).<br><br><strong>💎 Word Family:</strong><br>• Động từ/Danh từ ranh giới: <strong>limit</strong> (giới hạn / hạn mức)<br>• Danh từ trừu tượng nhược điểm: <strong>limitation</strong> -> số nhiều: <strong>limitations</strong> (sự hạn chế)<br>• Tính từ: <strong>limited</strong> (có hạn, hạn chế) ↔ <strong>unlimited</strong> (vô hạn, không giới hạn)" },
+            { id: 19, text: "19. My teacher (COURAGE) me to take this exam.", options: ["encouraged", "encourage", "courage", "encouragement"], correct: "encouraged", exp: "<strong>Vị trí từ loại:</strong> Đứng sau chủ ngữ <em>My teacher</em> và đứng trước cụm tân ngữ + to-V ('me to take') $\rightarrow$ Vị trí này câu đang bị trống một <strong>Động từ chính</strong>.<br><strong>Cấu trúc ngữ pháp:</strong> Ta có công thức <em>encourage someone to do something</em> nghĩa là 'khuyến khích/động viên ai làm việc gì'. Vì hành động này nói về một việc giáo viên đã làm khích lệ học sinh nên ta chia ở thì Quá khứ đơn thêm đuôi '-ed' thành <em>encouraged</em>.<br><br><strong>💎 Word Family:</strong><br>• Danh từ gốc: <strong>courage</strong> (lòng dũng cảm, sự can đảm)<br>• Danh từ hành động: <strong>encouragement</strong> (sự động viên, lời khuyến khích)<br>• Động từ tác động: <strong>encourage</strong> (khuyến khích, cổ vũ) ↔ <strong>discourage</strong> (làm nản lòng)" },
+            { id: 20, text: "20. It was very (CARE) of you to break that coffee cup.", options: ["careless", "careful", "carelessly", "carefulness"], correct: "careless", exp: "<strong>Vị trí từ loại:</strong> Nằm trong cấu trúc ngữ pháp nhận xét, trách móc hoặc khen ngợi hành vi: <strong>It is/was + Adjective + of someone + to-V</strong>.<br><strong>Phân tích ngữ cảnh chọn từ:</strong> Hành động ở vế sau là 'to break that coffee cup' (làm vỡ chiếc tách cà phê đó) $\rightarrow$ Đây là một hành vi thể hiện sự bất cẩn, đoảng vị của con người. Vì vậy, ta phải điền tính từ mang nghĩa phủ định là <em>careless</em> (bất cẩn, cẩu thẩu).<br><br><strong>💎 Word Family:</strong><br>• Danh từ/Động từ: <strong>care</strong> (sự chăm sóc, sự cẩn thận / quan tâm)<br>• Tính từ: <strong>careful</strong> (cẩn thận) ↔ <strong>careless</strong> (bất cẩn, cẩu thả)<br>• Trạng từ: <strong>carefully</strong> ↔ <strong>carelessly</strong>" },
+            { id: 21, text: "21. (TRADITION) , the Ao dai was frequently worn by both men and women.", options: ["Traditionally", "Traditional", "Tradition", "Traditionalism"], correct: "Traditionally", exp: "<strong>Vị trí từ loại:</strong> Đứng ở vị trí đầu câu và được ngăn cách với mệnh đề chính phía sau bằng một dấu phẩy $\rightarrow$ Vị trí này cần điền một <strong>Trạng từ bổ nghĩa cho cả câu</strong>.<br><strong>Mẹo làm bài:</strong> Trạng từ đứng đầu câu có dạng <em>Adv, S + V</em>. Lưu ý vì đứng đầu câu nên ta phải viết hoa chữ cái đầu tiên: <em>Traditionally</em> (Theo truyền thống).<br><br><strong>💎 Word Family:</strong><br>• Danh từ: <strong>tradition</strong> (truyền thống, phong tục)<br>• Tính từ: <strong>traditional</strong> (mang tính truyền thống, cổ truyền)<br>• Trạng từ: <strong>traditionally</strong> (theo truyền thống)" },
+            { id: 22, text: "22. The Internet has (INCREASE) developed and become part of our everyday life.", options: ["increasingly", "increased", "increase", "increasing"], correct: "increasingly", exp: "<strong>Vị trí từ loại:</strong> Ô trống nằm kẹp giữa trợ động từ <em>has</em> và động từ phân từ hai ở dạng V3/ed là <em>developed</em> $\rightarrow$ Theo quy tắc vị trí cấu trúc, từ loại đứng giữa thì hoàn thành để bổ trợ cho động từ bắt buộc phải là một <strong>Trạng từ</strong>.<br><strong>Ngữ cảnh:</strong> Ta chọn trạng từ mức độ tiến tiến dần <em>increasingly</em> mang nghĩa là 'ngày càng, càng ngày càng nhiều'. Câu dịch: 'Internet đã ngày càng phát triển và trở thành một phần của cuộc sống hàng ngày.'" },
+            { id: 23, text: "23. Easter is a (JOY) festival which is celebrated in many countries.", options: ["joyful", "joy", "joyous", "joyfully"], correct: "joyful", exp: "<strong>Vị trí từ loại:</strong> Ô trống đứng trước danh từ lễ hội <em>festival</em> và đứng sau mạo từ <em>a</em> $\rightarrow$ Vị trí này cần điền một <strong>Tính từ</strong> để mô tả đặc điểm tính chất cho danh từ đó (Adj + N).<br><strong>Ngữ cảnh:</strong> Lễ Phục Sinh (Easter) là một lễ hội tràn đầy niềm vui, không khí tưng bừng nên ta chọn tính từ <em>joyful</em> (vui tươi, hạnh phúc).<br><br><strong>💎 Word Family:</strong><br>• Danh từ: <strong>joy</strong> (niềm vui, sự vui sướng)<br>• Tính từ: <strong>joyful / joyous</strong> (vui vẻ, vui tươi, mang lại niềm vui)<br>• Trạng từ: <strong>joyfully</strong> (một cách vui vẻ)" },
+            { id: 24, text: "24. The baby laughed (HAPPY) as she play with her toys.", options: ["happily", "happy", "happiness", "unhappily"], correct: "happily", exp: "<strong>Vị trí từ loại:</strong> Đứng sau bổ nghĩa trực tiếp cho động từ hành động chỉ tiếng cười thường <em>laughed</em> $\rightarrow$ Cần một <strong>Trạng từ cách thức</strong> bổ trợ (V + Adv).<br><strong>Ngữ cảnh:</strong> Đứa bé đang chơi với đồ chơi một cách vui vẻ nên ta chọn trạng từ mang nghĩa tích cực là <em>happily</em>. Câu dịch: 'Đứa bé cười một cách hạnh phúc khi chơi với đồ chơi của mình.'" },
+            { id: 25, text: "25. Edison’s most famous (INVENT) was the electric bulb.", options: ["invention", "inventor", "invent", "inventive"], correct: "invention", exp: "<strong>Vị trí từ loại:</strong> Đứng sau cụm từ sở hữu cách kết hợp tính từ so sánh nhất <em>Edison’s most famous</em> và làm chủ ngữ đứng trước động từ tobe <em>was</em> $\rightarrow$ Vị trí này bắt buộc phải điền một <strong>Danh từ</strong>.<br><strong>Phân tích ngữ cảnh chọn nghĩa:</strong> Bổ ngữ phía sau tobe chỉ vật thể là 'the electric bulb' (bóng đèn điện) $\rightarrow$ Chủ ngữ phải là 'sự phát minh/vật phát minh' chứ không chọn từ chỉ người (inventor - nhà phát minh). Do đó từ chính xác là <em>invention</em>." },
+            { id: 26, text: "26. We were disappointed because of his bad (BEHAVE) .", options: ["behavior", "behave", "behavioural", "misbehave"], correct: "behavior", exp: "<strong>Vị trí từ loại:</strong> Đứng sau cụm giới từ chỉ nguyên nhân <em>because of</em>, đi kèm tính từ sở hữu <em>his</em> và tính từ miêu tả <em>bad</em> $\rightarrow$ Vị trí cuối cụm từ này chắc chắn phải là một <strong>Danh từ</strong> (Tính từ + Danh từ).<br><strong>Ngữ cảnh:</strong> Chúng tôi thất vọng vì 'cách cư xử' tồi tệ của anh ta. Danh từ của động từ behave là <em>behavior / behaviour</em> (hành vi, cách cư xử).<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>behave</strong> (cư xử, ngoan ngoãn) ↔ <strong>misbehave</strong> (cư xử tệ, vô kỷ luật)<br>• Danh từ: <strong>behavior / behaviour</strong> (cách cư xử, thái độ)" },
+            { id: 27, text: "27. There are a lot of (BEAUTY) mountains in Vietnam.", options: ["beautiful", "beauty", "beautifully", "beautify"], correct: "beautiful", exp: "<strong>Vị trí từ loại:</strong> Đứng trước danh từ số nhiều những ngọn núi <em>mountains</em> nằm trong cụm 'a lot of... mountains' $\rightarrow$ Theo quy tắc, từ loại đứng trước bổ nghĩa cho danh từ là một <strong>Tính từ</strong> (Adj + N).<br><strong>Ngữ cảnh:</strong> Miêu tả cảnh sắc thiên nhiên những ngọn núi vô cùng xinh đẹp ở Việt Nam $\rightarrow$ Điền tính từ <em>beautiful</em>." },
+            { id: 28, text: "28. Doctors have stressed the (NECESSARY) of eating plenty of fresh vegetables.", options: ["necessity", "necessary", "unnecessary", "necessarily"], correct: "necessity", exp: "<strong>Vị trí từ loại:</strong> Từ loại bị kẹp giữa mạo từ xác định <em>the</em> và giới từ <em>of</em> $\rightarrow$ Vị trí này bắt buộc phải điền một <strong>Danh từ</strong>.<br><strong>Ngữ cảnh:</strong> Các bác sĩ đã nhấn mạnh 'sự cần thiết/tính tất yếu' của việc ăn nhiều rau xanh. Danh từ tương ứng là <em>necessity</em>.<br><br><strong>💎 Word Family:</strong><br>• Tính từ: <strong>necessary</strong> (cần thiết) ↔ <strong>unnecessary</strong> (không cần thiết)<br>• Danh từ: <strong>necessity</strong> (sự cần thiết, nhu cầu thiết yếu)<br>• Trạng từ: <strong>necessarily</strong> (nhất thiết, tất yếu)" },
+            { id: 29, text: "29. Farmers (FERTILE) their fields with manure.", options: ["fertilize", "fertile", "fertilizer", "fertility"], correct: "fertilize", exp: "<strong>Vị trí từ loại:</strong> Ô trống đứng sau danh từ chủ ngữ số nhiều chỉ người <em>Farmers</em> (Các bác nông dân) và đứng trước cụm tân ngữ 'their fields' (cánh đồng của họ) $\rightarrow$ Câu này đang bị thiếu một <strong>Động từ chính</strong> gánh vác hành động.<br><strong>Ngữ cảnh & Chia thì:</strong> Dựa trên gốc từ tính từ 'fertile' (màu mỡ), ta chuyển sang dạng động từ mang nghĩa tác động là 'bón phân/làm cho đất màu mỡ' (fertilize). Vì chủ ngữ số nhiều và diễn tả sự thật hiển nhiên nên động từ giữ nguyên mẫu ở thì Hiện tại đơn.<br><br><strong>💎 Word Family:</strong><br>• Tính từ: <strong>fertile</strong> (màu mỡ, phì nhiêu, có khả năng sinh sản)<br>• Động từ: <strong>fertilize / fertilise</strong> (bón phân, làm cho màu mỡ, thụ tinh)<br>• Danh từ: <strong>fertilizer</strong> (phân bón hóa học/hữu cơ), <strong>fertility</strong> (độ màu mỡ của đất / khả năng sinh sản)" },
+            { id: 30, text: "30. Do you understand the (CONDITION) sentences?", options: ["conditional", "condition", "conditioned", "conditionally"], correct: "conditional", exp: "<strong>Vị trí từ loại:</strong> Đứng trước danh từ các câu <em>sentences</em> để bổ nghĩa phân loại $\rightarrow$ Cần điền một <strong>Tính từ</strong>.<br><strong>Ngữ cảnh:</strong> Tạo thành thuật ngữ ngữ pháp tiếng Anh quen thuộc: <em>conditional sentences</em> nghĩa là 'các câu điều kiện'.<br><br><strong>💎 Word Family:</strong><br>• Danh từ: <strong>condition</strong> (điều kiện, trạng thái thể chất)<br>• Tính từ: <strong>conditional</strong> (có điều kiện, thuộc điều kiện)<br>• Trạng từ: <strong>conditionally</strong>" },
+            { id: 31, text: "31. Tet holiday is the most important (CELEBRATE) for Vietnamese people.", options: ["celebration", "celebrate", "celebrated", "celebrity"], correct: "celebration", exp: "<strong>Vị trí từ loại:</strong> Đứng làm danh từ trung tâm ở cuối cụm từ chứa cấu trúc so sánh nhất <em>the most important...</em> $\rightarrow$ Vị trí này bắt buộc phải điền một <strong>Danh từ</strong>.<br><strong>Ngữ cảnh:</strong> Tết Nguyên Đán là một 'ngày lễ kỷ niệm/sự ăn mừng' quan trọng nhất của người Việt. Ta chọn danh từ sự việc là <em>celebration</em> (tránh nhầm với danh từ celebrity nghĩa là người nổi tiếng).<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>celebrate</strong> (ăn mừng, làm lễ kỷ niệm)<br>• Danh từ: <strong>celebration</strong> (sự ăn mừng, lễ kỷ niệm), <strong>celebrity</strong> (người nổi tiếng trong giới showbiz)<br>• Tính từ: <strong>celebrated</strong> (nổi tiếng, lừng danh)" },
+            { id: 32, text: "32. We have to be (CARE) when riding our bikes on the streets.", options: ["careful", "careless", "carefully", "carelessness"], correct: "careful", exp: "<strong>Vị trí từ loại:</strong> Đứng sau cụm từ khuyết thiếu bắt buộc kết hợp hệ từ <em>have to be...</em> $\rightarrow$ Vị trí này câu đòi hỏi điền một <strong>Tính từ</strong> đóng vai trò làm bổ ngữ.<br><strong>Ngữ cảnh chọn nghĩa tích cực:</strong> Lời khuyên răn khi đạp xe trên đường phố giao thông đông đúc, chúng ta phải 'cẩn thận' để đảm bảo an toàn tính mạng. Do đó ta chọn tính từ mang nghĩa khẳng định, tích cực là <em>careful</em>." },
+            { id: 33, text: "33. The old man walked (SLOW) to the park.", options: ["slowly", "slow", "slowness", "slowed"], correct: "slowly", exp: "<strong>Vị trí từ loại:</strong> Đứng sau và bổ nghĩa cách thức tốc độ cho động từ hành động thường ở thì quá khứ <em>walked</em> $\rightarrow$ Cần điền một <strong>Trạng từ</strong> bổ trợ (V + Adv).<br><strong>Ngữ cảnh:</strong> Cụm từ <em>walked slowly</em> nghĩa là 'đi bộ một cách chậm chạp'. Câu dịch: 'Ông lão đi bộ chậm rãi ra công viên.'<br><br><strong>💎 Word Family:</strong><br>• Tính từ/Động từ: <strong>slow</strong> (chậm chạp / làm giảm tốc độ)<br>• Trạng từ: <strong>slowly</strong> (một cách chậm chạp, từ tốn)<br>• Danh từ: <strong>slowness</strong> (sự chậm chạp, sự tốn thời gian)" },
+            { id: 34, text: "34. The author's (HAPPY) is communicated through his song.", options: ["happiness", "happy", "happily", "unhappiness"], correct: "happiness", exp: "<strong>Vị trí từ loại:</strong> Đứng ngay sau từ chỉ sở hữu cách danh xưng <em>The author's</em> (Của tác giả) và làm chủ ngữ chính đứng trước cụm động từ tobe 'is communicated' $\rightarrow$ Vị trí này bắt buộc phải điền một <strong>Danh từ trừu tượng</strong>.<br><strong>Ngữ cảnh:</strong> 'Niềm hạnh phúc' của tác giả được truyền tải qua bài hát của ông ấy. Danh từ của chữ happy là <em>happiness</em>." },
+            { id: 35, text: "35. We find Huong very (COMMUNICATE) .", options: ["communicative", "communication", "communicate", "uncommunicative"], correct: "communicative", exp: "<strong>Vị trí từ loại:</strong> Áp dụng cấu trúc nhận định tính cách con người: <strong>find + someone + very + Adjective</strong> (thấy ai đó như thế nào). Vị trí này cần điền một <strong>Tính từ</strong>.<br><strong>Ngữ cảnh chọn nghĩa:</strong> Để mô tả một người cởi mở, thân thiện, thích trò chuyện và giỏi giao tiếp, ta dùng tính từ đặc trưng là <em>communicative</em>.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>communicate</strong> (giao tiếp, truyền đạt thông tin)<br>• Danh từ: <strong>communication</strong> (sự giao tiếp, hệ thống thông tin liên lạc)<br>• Tính từ: <strong>communicative</strong> (cởi mở, hay chuyện, thích giao tiếp) ↔ <strong>uncommunicative</strong> (ít nói, khó gần)" },
+            { id: 36, text: "36. They went to see most of the (INTEREST) places.", options: ["interesting", "interested", "interest", "interestingly"], correct: "interesting", exp: "<strong>Vị trí từ loại:</strong> Đứng trước bổ nghĩa tính chất cho danh từ địa điểm danh thắng <em>places</em> nằm trong cụm 'the... places' $\rightarrow$ Cần một <strong>Tính từ</strong> (Adj + N).<br><strong>Mẹo chọn đuôi -ing/-ed:</strong> Để miêu tả tính chất hấp dẫn, thú vị cốt lõi tự thân của một địa điểm danh lam thắng cảnh (vật), ta dùng tính từ mang hình thái đuôi chủ động là <strong>'-ing'</strong> $\rightarrow$ <em>interesting places</em> (những nơi thú vị)." },
+            { id: 37, text: "37. His sudden (DIE) must be a shock to her and her family.", options: ["death", "die", "dead", "deadly"], correct: "death", exp: "<strong>Vị trí từ loại:</strong> Đứng sau từ sở hữu <em>His</em> và tính từ miêu tả tính chất đột ngột <em>sudden</em>, đóng vai trò làm cụm chủ ngữ chính đứng trước động từ khuyết thiếu 'must be' $\rightarrow$ Bắt buộc phải dùng một <strong>Danh từ</strong>.<br><strong>Ngữ cảnh:</strong> 'Cái chết' đột ngột của anh ấy chắc chắn là một cú sốc lớn. Danh từ của động từ die là <em>death</em>.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>die</strong> (chết, qua đời)<br>• Danh từ: <strong>death</strong> (cái chết, sự tử vong)<br>• Tính từ: <strong>dead</strong> (đã chết - chỉ trạng thái), <strong>deadly</strong> (gây chết người, cực kỳ nguy hiểm)" },
+            { id: 38, text: "38. The other (COMPLETE) admired him.", options: ["competitors", "completers", "compete", "competition"], correct: "competitors", exp: "<strong>Vị trí từ loại:</strong> Đứng sau cụm chỉ đối tượng còn lại <em>The other</em> và làm chủ ngữ đứng trước động từ hành động ngưỡng mộ 'admired' $\rightarrow$ Cần một <strong>Danh từ chỉ người số nhiều</strong>.<br><strong>Mẹo xử lý lỗi đề thi:</strong> Đây là một câu rất kinh điển hay bị lỗi gõ chữ của đề thi gốc gốc từ đúng phải là <strong>COMPETE</strong> (thi đấu) $\rightarrow$ chuyển thành danh từ chỉ người tham gia tranh tài số nhiều là <em>competitors</em> (các đối thủ cạnh tranh/thí sinh cùng thi đấu)." },
+            { id: 39, text: "39. We can only get their by plane. There is no (CHOOSE) .", options: ["choice", "choose", "choosy", "chosen"], correct: "choice", exp: "<strong>Vị trí từ loại:</strong> Đứng sau cấu trúc từ hạn định phủ định tuyệt đối chỉ sự không tồn tại: <strong>There is no + Danh từ</strong> $\rightarrow$ Vị trí này bắt buộc phải điền một <strong>Danh từ</strong>.<br><strong>Ngữ cảnh:</strong> Chúng ta chỉ có thể đến đó bằng máy bay. Không còn 'sự lựa chọn' nào khác cả. Danh từ của động từ choose là <em>choice</em>.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>choose</strong> (lựa chọn, tuyển chọn)<br>• Danh từ: <strong>choice</strong> (sự lựa chọn, quyền chọn lựa)<br>• Tính từ: <strong>choosy</strong> (kén chọn, khó tính)" },
+            { id: 40, text: "40. Sony is a big firm which is (COMPETE) in Vietnamese's market.", options: ["competitive", "compete", "competition", "competitor"], correct: "competitive", exp: "<strong>Vị trí từ loại:</strong> Đứng sau đại từ quan hệ đóng vai trò hệ từ liên kết cấu trúc <em>which is...</em> ở giữa câu $\rightarrow$ Vị trí này cần điền một <strong>Tính từ</strong> làm bổ ngữ.<br><strong>Ngữ cảnh:</strong> Sony là một công ty lớn có năng lực mạnh mẽ, 'giàu tính cạnh tranh' trên thị trường Việt Nam. Ta chọn tính từ đặc tính là <em>competitive</em>." },
+            { id: 41, text: "41. Doctors and (SCIENCE) have reported on how we are all affected by the noise around us.", options: ["scientists", "science", "scientific", "scientifically"], correct: "scientists", exp: "<strong>Vị trí từ loại:</strong> Từ loại được kết nối bằng liên từ song hành <em>and</em> với danh từ chỉ người số nhiều <em>Doctors</em> (Các bác sĩ) và đi liền trước trợ động từ chia dạng số nhiều 'have reported' $\rightarrow$ Vị trí này bắt buộc phải điền một <strong>Danh từ số nhiều chỉ người</strong> có vị thế tương đương (Các nhà khoa học $\rightarrow$ <em>scientists</em>).<br><br><strong>💎 Word Family:</strong><br>• Danh từ: <strong>science</strong> (khoa học), <strong>scientist</strong> (nhà khoa học) -> số nhiều: <strong>scientists</strong><br>• Tính từ: <strong>scientific</strong> (thuộc về khoa học, có tính khoa học)" },
+            { id: 42, text: "42. The (FRIEND) between Vietnam and China is recovered.", options: ["friendship", "friendly", "friend", "friendliness"], correct: "friendship", exp: "<strong>Vị trí từ loại:</strong> Đứng ở đầu câu làm nhiệm vụ giữ chức vụ chủ ngữ chính sau mạo từ xác định <em>The</em> $\rightarrow$ Cần điền một danh từ.<br><strong>Ngữ cảnh mối quan hệ vĩ mô:</strong> Câu nói về mối quan hệ ngoại giao bang giao giữa nước Việt Nam và Trung Quốc $\rightarrow$ Ta cần điền <strong>Danh từ trừu tượng chỉ mối quan hệ hữu nghị, tình bạn</strong> là <em>friendship</em>. Câu dịch: 'Tình hữu nghị giữa Việt Nam và Trung Quốc đã được phục hồi.'" },
+            { id: 43, text: "43. The boss refused to meet the Union's (DELEGATE) .", options: ["delegation", "delegate", "delegating", "call"], correct: "delegation", exp: "<strong>Vị trí từ loại:</strong> Đứng sau cấu trúc sở hữu cách danh từ tổ chức <em>Union’s</em> (Của Công đoàn) đóng vai trò làm tân ngữ tiếp nhận sau động từ từ chối gặp 'refused to meet' $\rightarrow$ Cần điền một <strong>Danh từ</strong>.<br><strong>Ngữ cảnh:</strong> Ông chủ từ chối gặp 'phái đoàn đại biểu' của Công đoàn. Ta dùng danh từ tập hợp chỉ đoàn người là <em>delegation</em>." },
+            { id: 44, text: "44. Many (CULTURE) activities will be held tomorrow.", options: ["cultural", "culture", "culturally", "cultures"], correct: "cultural", exp: "<strong>Vị trí từ loại:</strong> Từ loại đứng trước bổ nghĩa đặc trưng tính chất nội dung cho danh từ số nhiều các hoạt động <em>activities</em> nằm sau lượng từ many $\rightarrow$ Cần dùng một <strong>Tính từ</strong> (Adj + N).<br><strong>Ngữ cảnh:</strong> Các hoạt động mang tính chất văn hóa $\rightarrow$ Điền tính từ <em>cultural</em> (thuộc về văn hóa). Cụm từ: <em>cultural activities</em>.<br><br><strong>💎 Word Family:</strong><br>• Danh từ: <strong>culture</strong> (nền văn hóa, văn minh)<br>• Tính từ: <strong>cultural</strong> (thuộc về văn hóa, mang tính văn hóa)<br>• Trạng từ: <strong>culturally</strong> (về mặt văn hóa)" },
+            { id: 45, text: "45. She (REASON) with me for an hour about the future job yesterday.", options: ["reasoned", "reason", "reasonable", "reasonably"], correct: "reasoned", exp: "<strong>Vị trí từ loại:</strong> Đứng sau đại từ chủ ngữ chính <em>She</em> và đứng trước một cụm giới từ phụ trợ kéo dài $\rightarrow$ Mệnh đề này đang bị thiếu một <strong>Động từ chính</strong> chịu trách nhiệm ngữ pháp chính.<br><strong>Cấu trúc ngữ pháp & Chia thì:</strong> Ta có cụm động từ đi liền giới từ cố định: <em>reason with someone</em> nghĩa là 'dùng lý lẽ, lập luận để tranh luận/thuyết phục ai đó'. Vì câu chứa trạng từ thời gian quá khứ rõ ràng là <em>yesterday</em> (ngày hôm qua) $\rightarrow$ Động từ này phải chia ở thì Quá khứ đơn thêm đuôi '-ed' thành <em>reasoned</em>.<br><br><strong>💎 Word Family:</strong><br>• Danh từ/Động từ: <strong>reason</strong> (lý do, nguyên nhân / lập luận, thuyết phục)<br>• Tính từ: <strong>reasonable</strong> (hợp lý, giá cả phải chăng) ↔ <strong>unreasonable</strong> (vô lý, quá đáng)" },
+            { id: 46, text: "46. The (ATTRACT) of the moon for the earth causes the tides.", options: ["attraction", "attract", "attractive", "attractively"], correct: "attraction", exp: "<strong>Vị trí từ loại:</strong> Ô trống bị kẹp giữa mạo từ xác định <em>The</em> và giới từ sở hữu đối tượng <em>of</em>, giữ vị trí làm cụm chủ ngữ cốt lõi đứng đầu câu trước động từ 'causes' (gây ra) $\rightarrow$ Bắt buộc phải điền một <strong>Danh từ</strong>.<br><strong>Ngữ cảnh vật lý:</strong> Câu nói về hiện tượng tự nhiên thủy triều do 'sức hút/lực hút' của mặt trăng tác động lên trái đất gây ra $\rightarrow$ Danh từ chỉ lực hút thu hút là <em>attraction</em>." },
+            { id: 47, text: "47. Our team played (SUCCESS) . We lost.", options: ["unsuccessfully", "successfully", "successful", "unsuccessful"], correct: "unsuccessfully", exp: "<strong>Vị trí từ loại:</strong> Đứng sau bổ nghĩa phương thức kết quả cho động từ hành động thường ở thì quá khứ <em>played</em> $\rightarrow$ Vị trí này cần điền một <strong>Trạng từ</strong> bổ trợ hành động (V + Adv).<br><strong>Phân tích ngữ cảnh trái nghĩa:</strong> Câu ngắn thông báo kết quả phía sau ghi rất rõ: 'We lost' (Chúng tôi đã thua cuộc) $\rightarrow$ Đội đã thi đấu một cách 'thất bại, không thành công'. Vì vậy ta phải chọn trạng từ mang ý nghĩa phủ định là <em>unsuccessfully</em>.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>succeed</strong> (thành công, nối ngôi)<br>• Danh từ: <strong>success</strong> (sự thành công, thành tựu)<br>• Tính từ: <strong>successful</strong> (thành công) ↔ <strong>unsuccessful</strong> (thất bại, không thành công)<br>• Trạng từ: <strong>successfully</strong> ↔ <strong>unsuccessfully</strong>" },
+            { id: 48, text: "48. It is said that Hue is a (PEACE) city.", options: ["peaceful", "peace", "peacefully", "pacify"], correct: "peaceful", exp: "<strong>Vị trí từ loại:</strong> Đứng ở vị trí giữa mạo từ <em>a</em> và danh từ thành phố <em>city</em> $\rightarrow$ Quy tắc cấu trúc đòi hỏi điền một <strong>Tính từ</strong> đứng trước bổ nghĩa đặc điểm (Adj + N).<br><strong>Ngữ cảnh:</strong> Ca ngợi nét đặc trưng thơ mộng, yên bình, thanh bình của cố đô Huế $\rightarrow$ Chọn tính từ <em>peaceful</em> (thanh bình, yên ả).<br><br><strong>💎 Word Family:</strong><br>• Danh từ: <strong>peace</strong> (hòa bình, sự bình yên)<br>• Tính từ: <strong>peaceful</strong> (thanh bình, yên tĩnh)<br>• Trạng từ: <strong>peacefully</strong> (một cách bình yên)" },
+            { id: 49, text: "49. He came first in the (COMPETE) .", options: ["competition", "compete", "competitor", "competitive"], correct: "competition", exp: "<strong>Vị trí từ loại:</strong> Nằm trong cụm thành tích đứng ngay sau mạo từ giới từ xác định <em>in the...</em> ở cuối câu $\rightarrow$ Vị trí này bắt buộc phải điền một <strong>Danh từ</strong>.<br><strong>Ngữ cảnh & Cụm từ cố định:</strong> Ta có cụm từ diễn đạt quen thuộc chỉ thứ hạng cao: <em>come first in the competition</em> nghĩa là 'về nhất/giành giải nhất trong cuộc thi đấu'. Danh từ sự việc cuộc thi là <em>competition</em>." },
+            { id: 50, text: "50. Good (PREPARE) were the keys to the success of the 23th Sea Games.", options: ["preparations", "preparation", "prepare", "preparatory"], correct: "preparations", exp: "<strong>Vị trí từ loại:</strong> Đứng sau tính từ phẩm chất <em>Good</em> và đứng trước động từ tobe số nhiều ở thì quá khứ là <strong>were</strong> để làm chủ ngữ chính đầu câu $\rightarrow$ Vị trí này bắt buộc phải điền một <strong>Danh từ đếm được ở dạng số nhiều</strong> để hòa hợp với tobe 'were'.<br><strong>Ngữ cảnh:</strong> 'Các công tác chuẩn bị' tốt là chìa khóa dẫn đến thành công của Đại hội Thể thao Sea Games 23. Danh từ số nhiều tương ứng là <em>preparations</em>." }
+        ];
+
+        let studentAnswersTrack = {};
+
+        function mixOptionsRandomly(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function buildQuizLayout() {
+            const rootNode = document.getElementById('quiz-injector-node');
+            rootNode.innerHTML = "";
+
+            dataset.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.id = `q-card-block-${item.id}`;
+
+                let randomizedOptions = [...item.options];
+                mixOptionsRandomly(randomizedOptions);
+
+                let buttonsListMarkup = `<div class="options-list">`;
+                randomizedOptions.forEach((textOption, optIdx) => {
+                    const alphabetPrefix = ["A", "B", "C", "D"];
+                    const statusCheck = (textOption === item.correct);
+                    buttonsListMarkup += `
+                        <button class="option-btn" data-correct="${statusCheck}" onclick="validateUserClick(this, ${item.id})">
+                            <strong>${alphabetPrefix[optIdx]}.</strong> ${textOption}
+                        </button>
+                    `;
+                });
+                buttonsListMarkup += `</div>`;
+
+                card.innerHTML = `
+                    <div class="card-meta-title">Câu kiểm tra Word Form số ${index + 1} / 50</div>
+                    <div class="question-text">${item.text}</div>
+                    ${buttonsListMarkup}
+                    <div class="explanation-box" id="explain-box-id-${item.id}">
+                        <div class="explanation-title">📌 BẢNG PHÂN TÍCH CHUYÊN SÂU KHÔNG LỖI FONT:</div>
+                        <div class="explanation-content">${item.exp}</div>
+                    </div>
+                `;
+                rootNode.appendChild(card);
+            });
+        }
+
+        function validateUserClick(buttonElement, questionId) {
+            if (studentAnswersTrack[questionId] !== undefined) return;
+
+            const isCorrect = buttonElement.getAttribute('data-correct') === 'true';
+            studentAnswersTrack[questionId] = isCorrect;
+
+            const currentCardNode = document.getElementById(`q-card-block-${questionId}`);
+            const siblingButtons = currentCardNode.querySelectorAll('.option-btn');
+
+            if (isCorrect) {
+                buttonElement.classList.add('correct');
+                triggerSoundFeedback('correct');
+                launchConfettiEffect();
+            } else {
+                buttonElement.classList.add('wrong');
+                currentCardNode.classList.add('shake-animation');
+                triggerSoundFeedback('wrong');
+
+                siblingButtons.forEach(btn => {
+                    if (btn.getAttribute('data-correct') === 'true') {
+                        btn.classList.add('correct');
+                    }
+                });
+
+                setTimeout(() => {
+                    currentCardNode.classList.remove('shake-animation');
+                }, 450);
+            }
+
+            siblingButtons.forEach(btn => btn.classList.add('disabled'));
+            document.getElementById(`explain-box-id-${questionId}`).style.display = "block";
+        }
+
+        const canvasElement = document.getElementById('confetti-canvas');
+        const ctxNode = canvasElement.getContext('2d');
+        let confettiCollection = [];
+
+        function dynamicCanvasResize() {
+            canvasElement.width = window.innerWidth;
+            canvasElement.height = window.innerHeight;
+        }
+        window.addEventListener('resize', dynamicCanvasResize);
+        dynamicCanvasResize();
+
+        function launchConfettiEffect() {
+            const colors = ['#FF4757', '#00D26A', '#8854C0', '#FDCB6E', '#00C9A7', '#FFFFFF'];
+            for (let i = 0; i < 35; i++) {
+                confettiCollection.push({
+                    x: Math.random() * canvasElement.width,
+                    y: Math.random() * canvasElement.height - canvasElement.height,
+                    size: Math.random() * 6 + 6,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speedX: Math.random() * 4 - 2,
+                    speedY: Math.random() * 4 + 4,
+                    rotation: Math.random() * 360,
+                    rotationSpeed: Math.random() * 4 - 2
+                });
+            }
+        }
+
+        function animationLoop() {
+            ctxNode.clearRect(0, 0, canvasElement.width, canvasElement.height);
+            confettiCollection.forEach((p, index) => {
+                p.x += p.speedX; p.y += p.speedY; p.rotation += p.rotationSpeed;
+                ctxNode.save();
+                ctxNode.translate(p.x, p.y);
+                ctxNode.rotate((p.rotation * Math.PI) / 180);
+                ctxNode.fillStyle = p.color;
+                ctxNode.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                ctxNode.restore();
+                if (p.y > canvasElement.height) {
+                    confettiCollection.splice(index, 1);
+                }
+            });
+            requestAnimationFrame(animationLoop);
+        }
+        requestAnimationFrame(animationLoop);
+
+        function processQuizEvaluation() {
+            let totalQuestions = dataset.length;
+            let correctCount = 0;
+
+            dataset.forEach(q => {
+                if (studentAnswersTrack[q.id] === true) {
+                    correctCount++;
+                }
+            });
+
+            let percentageResult = (correctCount / totalQuestions) * 100;
+            let finalTeacherComment = "";
+
+            if (percentageResult < 50) {
+                finalTeacherComment = "Nền tảng từ loại cấu trúc câu cần được gia cố thêm. Con hãy xem lại kỹ các tiền tố/hậu tố phủ định và chép lại Word Family vào vở nhé!";
+            } else if (percentageResult >= 50 && percentageResult <= 80) {
+                finalTeacherComment = "Làm bài rất tốt! Con đã nắm chắc cách nhận diện vị trí danh từ, tính từ và trạng từ cơ bản trong câu hỏi đề thi.";
+            } else {
+                finalTeacherComment = "Xuất sắc chuẩn học sinh giỏi! Con có phản xạ nhận diện ngữ cảnh và tiền tố phủ định từ loại cực kỳ nhạy bén.";
+            }
+
+            document.getElementById('score-text').innerText = `${correctCount} / ${totalQuestions}`;
+            document.getElementById('feedback-text').innerText = finalTeacherComment;
+            document.getElementById('score-modal').classList.add('active');
+
+            if (percentageResult >= 75) {
+                for (let k = 0; k < 5; k++) {
+                    setTimeout(launchConfettiEffect, k * 250);
+                }
+            }
+        }
+
+        function reloadQuizLayout() {
+            studentAnswersTrack = {};
+            confettiCollection = [];
+            document.getElementById('score-modal').classList.remove('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(buildQuizLayout, 400);
+        }
+
+        window.onload = function() {
+            buildQuizLayout();
+        };
+    </script>
+</body>
+</html>
